@@ -1,0 +1,65 @@
+{
+  "name": "graycore/magento2-guest-orders-graphql",
+  "description": "A Magento 2 module that adds a GraphQL orders endpoint for guest carts.",
+  "type": "magento2-module",
+  "require": {
+    "php": ">=7.0.0",
+    "magento/framework": "*",
+    "magento/module-graph-ql": "*",
+    "magento/module-quote": "*",
+    "magento/module-sales": "*",
+    "magento/module-store": "*"
+  },
+  "scripts": {
+    "test": "phpunit --bootstrap vendor/autoload.php test",
+    "unit-test": "vendor/bin/phpunit ./Test/Unit",
+    "lint": "phpcs . --standard=Magento2 --ignore='vendor/*'",
+    "post-install-cmd": [
+        "([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/)"
+    ],
+    "post-update-cmd": [
+        "([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/)"
+    ]
+  },
+  "license": [
+    "MIT"
+  ],
+  "minimum-stability": "stable",
+  "archive": {
+    "exclude": [
+        "/docs",
+        "/Test",
+        "README.md"
+    ]
+  },
+  "repositories": {
+    "repo.magento": {
+        "type": "composer",
+        "url": "https://repo.magento.com/"
+    }
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Graycore\\GuestOrdersGraphQl\\": ""
+    }
+  },
+  "require-dev": {
+    "magento/magento-coding-standard": "^5.0",
+    "phpunit/phpunit": "^8.5",
+    "squizlabs/php_codesniffer": "^3.4"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "platform": {
+        "php": "7.2.0",
+        "ext-mbstring": "7.2.0",
+        "ext-bcmath": "7.2.0",
+        "ext-gd": "7.2.0",
+        "ext-curl": "7.2.0"
+    }
+  }
+}
