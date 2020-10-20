@@ -1,0 +1,31 @@
+type Query {
+    graycoreGuestOrders(
+        cartId: String!
+    ): GraycoreGuestOrders @doc(description: "Retrieves the order associated with the specified cart. Throws an error if the cart is not found or there isn't an order associated with it.") @resolver(class: "Graycore\\GuestOrdersGraphQl\\Model\\Resolver\\GuestOrders") @cache(cacheable: false)
+}
+
+type GraycoreGuestOrders @doc(description: "The collection of orders that are associated with the guest cart.") {
+    items: [GraycoreGuestOrder]! @doc(description: "An array of guest orders")
+}
+
+type GraycoreGuestOrder @doc(description: "Contains details about each of the orders associated with the guest cart.") {
+    id: ID! @doc(description: "Unique identifier for the order")
+    order_date: String! @doc(description: "The date the order was placed")
+    status: String! @doc(description: "The current status of the order")
+    number: String! @doc(description: "The order number")
+    items: [OrderItemInterface] @doc(description: "An array containing the items purchased in this order") @resolver(class: "Graycore\\GuestOrdersGraphQl\\Model\\Resolver\\GuestOrderItems")
+    total: OrderTotal @doc(description: "Contains details about the calculated totals for this order") @resolver(class: "Magento\\SalesGraphQl\\Model\\Resolver\\OrderTotal")
+    invoices: [Invoice]! @doc(description: "A list of invoices for the order") @resolver(class: "Magento\\SalesGraphQl\\Model\\Resolver\\Invoices")
+    shipments: [OrderShipment] @doc(description: "A list of shipments for the order") @resolver(class: "Magento\\SalesGraphQl\\Model\\Resolver\\Shipments")
+    credit_memos: [CreditMemo] @doc(description: "A list of credit memos") @resolver(class: "Magento\\SalesGraphQl\\Model\\Resolver\\CreditMemos")
+    payment_methods: [OrderPaymentMethod] @doc(description: "Payment details for the order")
+    shipping_address: OrderAddress @doc(description: "The shipping address for the order")
+    billing_address: OrderAddress @doc(description: "The billing address for the order")
+    carrier: String @doc(description: "The shipping carrier for the order delivery") @resolver(class: "Magento\\SalesGraphQl\\Model\\Resolver\\CustomerOrders\\Carrier")
+    shipping_method: String @doc(description: "The delivery method for the order")
+    comments: [SalesCommentItem] @doc(description: "Comments about the order")
+    increment_id: String @deprecated(reason: "Use the id attribute instead")
+    order_number: String! @deprecated(reason: "Use the number attribute instead")
+    created_at: String @deprecated(reason: "Use the order_date attribute instead")
+    grand_total: Float  @deprecated(reason: "Use the totals.grand_total attribute instead")
+}
