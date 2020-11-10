@@ -1,6 +1,6 @@
 # magento2-guest-orders-graphql
 
-[![Build Status](https://dev.azure.com/graycore/open-source/_apis/build/status/graycoreio.magento2-guest-orders-graphql?branchName=master)](https://dev.azure.com/graycore/open-source/_build/latest?definitionId=17&branchName=master)
+[![Build Status](https://dev.azure.com/graycore/open-source/_apis/build/status/graycoreio.magento2-guest-orders-graphql?branchName=main)](https://dev.azure.com/graycore/open-source/_build/latest?definitionId=17&branchName=main)
 
 A Magento 2 module that adds a GraphQL orders endpoint for guest carts. This closely follows the API for the official customer orders endpoint.
 
