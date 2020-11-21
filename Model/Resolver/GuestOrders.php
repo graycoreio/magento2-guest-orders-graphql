@@ -111,6 +111,7 @@ class GuestOrders implements ResolverInterface
                 'billing_address' => $this->orderAddress->getOrderBillingAddress($orderModel),
                 'payment_methods' => $this->orderPayments->getOrderPaymentMethod($orderModel),
                 'model' => $orderModel,
+                'email' => $orderModel->getCustomerEmail()
             ];
         }
         return $ordersArray;

@@ -28,4 +28,5 @@ type GraycoreGuestOrder @doc(description: "Contains details about each of the or
     order_number: String! @deprecated(reason: "Use the number attribute instead")
     created_at: String @deprecated(reason: "Use the order_date attribute instead")
     grand_total: Float  @deprecated(reason: "Use the totals.grand_total attribute instead")
+    email: String! @doc(description: "The email set on the guest cart.")
 }
