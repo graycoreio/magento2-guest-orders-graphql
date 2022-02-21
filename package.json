@@ -1,7 +1,7 @@
 {
   "name": "@graycore/magento2-guest-orders-graphql",
   "description": "A Magento 2 module that adds a GraphQL orders endpoint for guest carts.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "directories": {
     "doc": "docs"
   },
