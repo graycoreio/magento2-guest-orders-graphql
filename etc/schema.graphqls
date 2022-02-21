@@ -8,6 +8,10 @@ type GraycoreGuestOrders @doc(description: "The collection of orders that are as
     items: [GraycoreGuestOrder]! @doc(description: "An array of guest orders")
 }
 
+type OrderAddress {
+    region_code: String @doc(description: "The region code. For the US this would be the two letter state code.")
+}
+
 type GraycoreGuestOrder @doc(description: "Contains details about each of the orders associated with the guest cart.") {
     id: ID! @doc(description: "Unique identifier for the order")
     order_date: String! @doc(description: "The date the order was placed")
