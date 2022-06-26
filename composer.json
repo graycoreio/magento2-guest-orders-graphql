@@ -3,7 +3,6 @@
   "description": "A Magento 2 module that adds a GraphQL orders endpoint for guest carts.",
   "type": "magento2-module",
   "require": {
-    "php": ">=7.0.0",
     "magento/framework": "*",
     "magento/module-graph-ql": "*",
     "magento/module-quote": "*",
@@ -47,19 +46,16 @@
     }
   },
   "require-dev": {
-    "magento/magento-coding-standard": "^5.0",
-    "phpunit/phpunit": "^8.5",
+    "magento/magento-coding-standard": ">=6.0",
+    "phpunit/phpunit": "^8.2 || ^9.0",
     "squizlabs/php_codesniffer": "^3.4"
   },
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
-    "platform": {
-        "php": "7.2.0",
-        "ext-mbstring": "7.2.0",
-        "ext-bcmath": "7.2.0",
-        "ext-gd": "7.2.0",
-        "ext-curl": "7.2.0"
+    "allow-plugins": {
+      "magento/composer-dependency-version-audit-plugin": false,
+      "magento/magento-composer-installer": false
     }
   }
 }
