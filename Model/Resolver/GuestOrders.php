@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 declare(strict_types=1);
 
 namespace Graycore\GuestOrdersGraphQl\Model\Resolver;
@@ -82,7 +84,7 @@ class GuestOrders implements ResolverInterface
         array $args = null
     ) {
         return [
-            'items' => $this->formatOrdersArray($this->getOrdersForCart($args['cartId']))
+            'items' => $this->formatOrder($this->getOrderForCart($args['cartId']))
         ];
     }
 
@@ -90,31 +92,29 @@ class GuestOrders implements ResolverInterface
      * Format order models for graphql schema.
      * Copied from the Magento resolver.
      *
-     * @param OrderInterface[] $orderModels
+     * @param \Magento\Sales\Model\Order $order
      * @return array
      */
-    private function formatOrdersArray(array $orderModels)
+    private function formatOrder(\Magento\Sales\Model\Order $order)
     {
-        $ordersArray = [];
-        foreach ($orderModels as $orderModel) {
-            $ordersArray[] = [
-                'created_at' => $orderModel->getCreatedAt(),
-                'grand_total' => $orderModel->getGrandTotal(),
-                'id' => base64_encode($orderModel->getEntityId()),
-                'increment_id' => $orderModel->getIncrementId(),
-                'number' => $orderModel->getIncrementId(),
-                'order_date' => $orderModel->getCreatedAt(),
-                'order_number' => $orderModel->getIncrementId(),
-                'status' => $orderModel->getStatusLabel(),
-                'shipping_method' => $orderModel->getShippingDescription(),
-                'shipping_address' => $this->orderAddress->getOrderShippingAddress($orderModel),
-                'billing_address' => $this->orderAddress->getOrderBillingAddress($orderModel),
-                'payment_methods' => $this->orderPayments->getOrderPaymentMethod($orderModel),
-                'model' => $orderModel,
-                'email' => $orderModel->getCustomerEmail()
-            ];
-        }
-        return $ordersArray;
+        return [
+            [
+                'created_at' => $order->getCreatedAt(),
+                'grand_total' => $order->getGrandTotal(),
+                'id' => base64_encode($order->getEntityId() ?? ''),
+                'increment_id' => $order->getIncrementId(),
+                'number' => $order->getIncrementId(),
+                'order_date' => $order->getCreatedAt(),
+                'order_number' => $order->getIncrementId(),
+                'status' => $order->getStatusLabel(),
+                'shipping_method' => $order->getShippingDescription(),
+                'shipping_address' => $this->orderAddress->getOrderShippingAddress($order),
+                'billing_address' => $this->orderAddress->getOrderBillingAddress($order),
+                'payment_methods' => $this->orderPayments->getOrderPaymentMethod($order),
+                'model' => $order,
+                'email' => $order->getCustomerEmail()
+            ]
+        ];
     }
 
     /**
@@ -137,10 +137,8 @@ class GuestOrders implements ResolverInterface
             );
         }
 
-        $cartCustomerId = (int)$cart->getCustomerId();
-
         /* Not a guest cart, throw */
-        if (0 !== $cartCustomerId) {
+        if (!$cart->getCustomerIsGuest()) {
             throw new GraphQlAuthorizationException(
                 __(
                     'The cart "%masked_cart_id" is not a guest cart',
@@ -158,7 +156,7 @@ class GuestOrders implements ResolverInterface
      * @param string $cartHash the hashed cart ID
      * @throws GraphQlNoSuchEntityException
      */
-    private function getOrdersForCart(string $cartHash)
+    private function getOrderForCart(string $cartHash)
     {
         $orderId = $this->getCart($cartHash)->getReservedOrderId();
 
@@ -171,13 +169,18 @@ class GuestOrders implements ResolverInterface
             );
         }
 
-        $orders = $this->collectionFactory->create(null)->getItems();
 
-        /** @param OrderInterface $order */
-        $isCartOrder = function ($order) use ($orderId) {
-            return $order->getIncrementId() === $orderId;
-        };
 
-        return array_values(array_filter($orders, $isCartOrder));
+        $order = $this->collectionFactory->create()->addFieldToSearchFilter('increment_id', $orderId)->getFirstItem();
+
+        if (!$order->getIncrementId()) {
+            throw new GraphQlNoSuchEntityException(
+                __(
+                    'Could not find an order associated with cart with ID "%masked_cart_id"',
+                    ['masked_cart_id' => $cartHash]
+                )
+            );
+        }
+        return $order;
     }
 }
