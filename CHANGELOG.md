@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.3](https://github.com/graycoreio/magento2-guest-orders-graphql/compare/v0.1.2...v0.1.3) (2023-06-14)
+
+
+### Performance Improvements
+
+* filter in sql, not php ([b9500d3](https://github.com/graycoreio/magento2-guest-orders-graphql/commit/b9500d35be0b24df90e51008cd060f2f2a39bc9e))
+
+
+### Miscellaneous Chores
+
+* remove lockfile ([#6](https://github.com/graycoreio/magento2-guest-orders-graphql/issues/6)) ([f4ebaca](https://github.com/graycoreio/magento2-guest-orders-graphql/commit/f4ebacaea211f1801ceb940826584831b41ecb7c))
+
 ### [0.1.2](https://github.com/graycoreio/magento2-guest-orders-graphql/compare/v0.1.1...v0.1.2) (2022-02-21)
 
 
