@@ -15,6 +15,9 @@ A Magento 2 module that adds a GraphQL orders endpoint for guest carts. This clo
 
 This should only be used for >= Magento 2.4.1. If you need an orders endpoint for < Magento 2.4.1, please use [magento2-orders-graphql](https://github.com/graycoreio/magento2-orders-graphql).
 
+> [!IMPORTANT]  
+> As of Magento v2.4.7, this package is no longer necessary. However, it is still usable with v2.4.7. It will no longer be usable in v2.4.8. As such, this package is archived.
+
 ## Installation
 
 ```sh
@@ -36,9 +39,6 @@ query GetGuestOrders {
   }
 }
 ```
-
-> [!IMPORTANT]  
-> As of Magento v2.4.7, this package is no longer necessary. However, it is still usable with v2.4.7. It will no longer be usable in v2.4.8. As such, this package is archived.
 
 ### Schema
 
