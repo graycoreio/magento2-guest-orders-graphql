@@ -37,6 +37,9 @@ query GetGuestOrders {
 }
 ```
 
+> [!IMPORTANT]  
+> As of Magento v2.4.7, this package is no longer necessary. However, it is still usable with v2.4.7. It will no longer be usable in v2.4.8. As such, this package is archived.
+
 ### Schema
 
 Refer to the [GraphQL schema](etc/schema.graphqls) for documentation about the types available in the queries.
