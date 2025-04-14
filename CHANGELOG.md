@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/graycoreio/magento2-guest-orders-graphql/compare/v0.1.3...v0.2.0) (2025-04-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* document incompatability with Magento v2.4.8
+
+### Features
+
+* document incompatability with Magento v2.4.8 ([06fbf7c](https://github.com/graycoreio/magento2-guest-orders-graphql/commit/06fbf7c40e1e01f92b1647aa9c8f9de5aa71dcd6))
+
 ## [0.1.3](https://github.com/graycoreio/magento2-guest-orders-graphql/compare/v0.1.2...v0.1.3) (2023-06-14)
 
 
