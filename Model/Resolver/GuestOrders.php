@@ -21,6 +21,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
 
 /**
  * Orders data resolver
@@ -53,24 +54,32 @@ class GuestOrders implements ResolverInterface
     private $collectionFactory;
 
     /**
+     * @var OrderRepositoryInterface
+     */
+    private $orderRepository;
+
+    /**
      * @param OrderAddress $orderAddress
      * @param OrderPayments $orderPayments
      * @param CollectionFactoryInterface $collectionFactory
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
      * @param CartRepositoryInterface $cartRepository
+     * @param OrderRepositoryInterface $orderRepository
      */
     public function __construct(
         OrderAddress $orderAddress,
         OrderPayments $orderPayments,
         CollectionFactoryInterface $collectionFactory,
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
-        CartRepositoryInterface $cartRepository
+        CartRepositoryInterface $cartRepository,
+        OrderRepositoryInterface $orderRepository
     ) {
         $this->orderAddress = $orderAddress;
         $this->orderPayments = $orderPayments;
         $this->collectionFactory = $collectionFactory;
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
         $this->cartRepository = $cartRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -181,6 +190,9 @@ class GuestOrders implements ResolverInterface
                 )
             );
         }
+
+        $order = $this->orderRepository->get($order->getId());
+        
         return $order;
     }
 }
